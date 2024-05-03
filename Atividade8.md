@@ -1,4 +1,5 @@
-## Atividade 8 - Enunciado
+## Atividade 8 - APIs gráficas
+## Enunciado
 Faça uma pesquisa sobre APIs gráficas e elabore um texto descrevendo os resultados da pesquisa.
 
 O seu texto deve conter:
