@@ -30,6 +30,7 @@ Larissa Rafaela Rodrigues Nepomuceno - RA: 10391039
 
 # Alterações necessárias no código
 - Redefinir os vértices e cores que irão compor o cubo
+  
 ``` c
 GLfloat vertices[] = {
     // Frente
