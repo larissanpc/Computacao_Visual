@@ -78,17 +78,15 @@ GLfloat colors[] = {
     1.0f, 1.0f, 1.0f,
     1.0f, 0.0f, 1.0f,
 };
-
-
 ```
 
 - EBO (Element Buffer Object) para armazenar os índices dos vértices
+  
 ``` c
 GLuint EBO;
 glGenBuffers(1, &EBO);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 ```
 
 - Adequação da lógica de renderização
@@ -139,7 +137,6 @@ while (isRunning)
 
     SDL_GL_SwapWindow(window);
 }
-
 ```
 
 - Aplicar teste de profundidade
