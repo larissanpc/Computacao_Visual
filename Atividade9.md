@@ -13,9 +13,143 @@ Descreva as alterações que devem ser realizadas e publique o resultado dessa a
 Lembre-se de incluir todas as referências consultadas (livros, links de artigos, vídeos, etc.) e identificar todas as pessoas do grupo.
 
 ## Nome e RA
-Larissa Rafaela Rodrigues Nepomuceno - 10391039
+Larissa Rafaela Rodrigues Nepomuceno - RA: 10391039
 
 [Home](README.md)
 
 ## Referências
+- https://web.engr.oregonstate.edu/~mjb/cs550/PDFs/VertexBuffers.2pp.pdf
+- https://docs.gl/gl3/glDrawArrays
+- https://www.youtube.com/watch?v=o8Nb3HR4n9c
+- https://www.opengl-tutorial.org/beginners-tutorials/tutorial-4-a-colored-cube/
+- https://shankarrajagopal.github.io/DOWNLOAD/CG_LAB_P3.pdf
+- https://gamedev.stackexchange.com/questions/147522/what-is-glviewport-for-and-why-it-is-not-necessary-sometimes
+- https://www.quora.com/How-do-you-make-a-sphere-rotate-in-3D-using-the-OpenGL-graphics-library
+- https://learnopengl.com/book/book_pdf.pdf
 
+
+# Alterações necessárias no código
+- Redefinir os vértices e cores que irão compor o cubo
+``` c
+GLfloat vertices[] = {
+    // frente
+    -0.5f, -0.5f,  0.5f,
+     0.5f, -0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f,
+    // tras
+    -0.5f, -0.5f, -0.5f,
+    -0.5f,  0.5f, -0.5f,
+     0.5f,  0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,
+};
+
+GLuint indices[] = {
+    // frente
+    0, 1, 2,
+    2, 3, 0,
+    // cima
+    3, 2, 6,
+    6, 5, 3,
+    // tras
+    5, 6, 7,
+    7, 4, 5,
+    // embaixo
+    4, 7, 1,
+    1, 0, 4,
+    // esquerda
+    4, 0, 3,
+    3, 5, 4,
+    // direita
+    1, 7, 6,
+    6, 2, 1,
+};
+
+GLfloat colors[] = {
+    // frente
+    0.0f, 0.0f, 0.0f,
+    1.0f, 0.0f, 0.0f,
+    1.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    // tras
+    0.0f, 0.0f, 1.0f,
+    0.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f, 0.0f, 1.0f,
+};
+
+
+```
+
+- EBO (Element Buffer Object) para armazenar os índices dos vértices
+``` c
+GLuint EBO;
+glGenBuffers(1, &EBO);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+```
+
+- Adequação da lógica de renderização
+``` c
+// glDrawArrays para glDrawElements
+glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+```
+
+- Adicionar a animação de rotação em um eixo
+``` c
+float angle = 0.0f;
+
+SDL_Event event;
+bool isRunning = true;
+while (isRunning)
+{
+    while (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT)
+        {
+            isRunning = false;
+        }
+    }
+
+    // atualiza angulo de rotacao
+    angle += 0.01f;
+    if (angle > 360.0f) {
+        angle -= 360.0f;
+    }
+
+    // adc na matriz de modelo
+    glm_mat4_identity(modelMatrix);
+    glm_rotate(modelMatrix, angle, (vec3){1.0f, 1.0f, 0.0f}); // Rotação em torno dos eixos x e y
+
+    // matriz mvp
+    glm_mat4_mul(projectionMatrix, viewMatrix, MVPMatrix);
+    glm_mat4_mul(MVPMatrix, modelMatrix, MVPMatrix);
+
+    // mvp para vertex shader
+    glUniformMatrix4fv(u_MVPMatrix, 1, GL_FALSE, (const GLfloat *)MVPMatrix);
+
+    // limpa buffer com cor preta
+    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // renderizacao
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+    SDL_GL_SwapWindow(window);
+}
+
+```
+
+- Aplicar teste de profundidade
+``` c
+glEnable(GL_DEPTH_TEST);
+```
+- Configuração da viewport
+``` c
+glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+```
+
+
+
+  
