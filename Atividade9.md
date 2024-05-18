@@ -32,12 +32,12 @@ Larissa Rafaela Rodrigues Nepomuceno - RA: 10391039
 - Redefinir os vértices e cores que irão compor o cubo
 ``` c
 GLfloat vertices[] = {
-    // frente
+    // Frente
     -0.5f, -0.5f,  0.5f,
      0.5f, -0.5f,  0.5f,
      0.5f,  0.5f,  0.5f,
     -0.5f,  0.5f,  0.5f,
-    // tras
+    // Trás
     -0.5f, -0.5f, -0.5f,
     -0.5f,  0.5f, -0.5f,
      0.5f,  0.5f, -0.5f,
@@ -45,33 +45,33 @@ GLfloat vertices[] = {
 };
 
 GLuint indices[] = {
-    // frente
+    // Frente
     0, 1, 2,
     2, 3, 0,
-    // cima
+    // Cima
     3, 2, 6,
     6, 5, 3,
-    // tras
+    // Trás
     5, 6, 7,
     7, 4, 5,
-    // embaixo
+    // Embaixo
     4, 7, 1,
     1, 0, 4,
-    // esquerda
+    // Esquerda
     4, 0, 3,
     3, 5, 4,
-    // direita
+    // Direita
     1, 7, 6,
     6, 2, 1,
 };
 
 GLfloat colors[] = {
-    // frente
+    // Frente
     0.0f, 0.0f, 0.0f,
     1.0f, 0.0f, 0.0f,
     1.0f, 1.0f, 0.0f,
     0.0f, 1.0f, 0.0f,
-    // tras
+    // Trás
     0.0f, 0.0f, 1.0f,
     0.0f, 1.0f, 1.0f,
     1.0f, 1.0f, 1.0f,
@@ -112,28 +112,28 @@ while (isRunning)
         }
     }
 
-    // atualiza angulo de rotacao
+    // Atualiza ângulo de rotação
     angle += 0.01f;
     if (angle > 360.0f) {
         angle -= 360.0f;
     }
 
-    // adc na matriz de modelo
+    // Adiciona na matriz de modelo
     glm_mat4_identity(modelMatrix);
     glm_rotate(modelMatrix, angle, (vec3){1.0f, 1.0f, 0.0f}); // Rotação em torno dos eixos x e y
 
-    // matriz mvp
+    // Matriz MVP
     glm_mat4_mul(projectionMatrix, viewMatrix, MVPMatrix);
     glm_mat4_mul(MVPMatrix, modelMatrix, MVPMatrix);
 
-    // mvp para vertex shader
+    // MVP para vertex shader
     glUniformMatrix4fv(u_MVPMatrix, 1, GL_FALSE, (const GLfloat *)MVPMatrix);
 
-    // limpa buffer com cor preta
+    // Limpa buffer com cor preta
     glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // renderizacao
+    // Renderização
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
     SDL_GL_SwapWindow(window);
