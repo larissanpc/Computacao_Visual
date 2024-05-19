@@ -31,7 +31,7 @@ Larissa Rafaela Rodrigues Nepomuceno - RA: 10391039
 # Alterações necessárias no código
 - Redefinir os vértices e cores que irão compor o cubo
   
-``` c
+``` C
 GLfloat vertices[] = {
     // Frente
     -0.5f, -0.5f,  0.5f,
@@ -82,7 +82,7 @@ GLfloat colors[] = {
 
 - EBO (Element Buffer Object) para armazenar os índices dos vértices
   
-``` c
+``` C
 GLuint EBO;
 glGenBuffers(1, &EBO);
 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -90,13 +90,13 @@ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 ```
 
 - Adequação da lógica de renderização
-``` c
+``` C
 // glDrawArrays para glDrawElements
 glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 ```
 
 - Adicionar a animação de rotação em um eixo
-``` c
+``` C
 float angle = 0.0f;
 
 SDL_Event event;
@@ -140,11 +140,11 @@ while (isRunning)
 ```
 
 - Aplicar teste de profundidade
-``` c
+``` C
 glEnable(GL_DEPTH_TEST);
 ```
 - Configuração da viewport
-``` c
+``` C
 glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 ```
 
