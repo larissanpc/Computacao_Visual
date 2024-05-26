@@ -14,3 +14,4 @@ Larissa Rafaela Rodrigues Nepomuceno - RA: 10391039
 - [Atividade 8 - APIs gráficas](Atividade8.md)
 - [Atividade 9 - Transformações](Atividade9.md)
 - [Atividade 10 - NPR](Atividade10.md)
+- [Projeto](projeto_comp_visual.ipynb)
